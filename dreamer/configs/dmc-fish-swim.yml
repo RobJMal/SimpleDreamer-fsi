@@ -10,8 +10,8 @@ environment :
     seed : 0
     visualize_reward : False
     from_pixels : True
-    height : 128 #64
-    width : 128 #64
+    height : 128 # 64
+    width : 128 # 64
     frame_skip : 2
     pixel_norm : True
 
@@ -40,7 +40,7 @@ parameters :
 
         deterministic_size : 200
         stochastic_size : 30
-        embedded_state_size : 9216 # (9216) for <128x128> images # 1024 for <64x64> images
+        embedded_state_size : 9216 # 1024 for <64x64> images; 9216 for <128x128> images
         buffer :
             capacity : 50000 # 5000000
 
@@ -51,7 +51,7 @@ parameters :
             activation : ReLU
 
         decoder : 
-            depth : 32
+            depth : 25  # 32 for <64x64> images; 25 for <128x128> images 
             stride : 2
             kernel_size : 5
             activation : ReLU

@@ -17,12 +17,13 @@ class Decoder(nn.Module):
         activation = getattr(nn, self.config.activation)()
         self.observation_shape = observation_shape
 
+        # Using 5*5 to accomodate 128x128 inputs 
         self.network = nn.Sequential(
             nn.Linear(
-                self.deterministic_size + self.stochastic_size, self.config.depth * 32
+                self.deterministic_size + self.stochastic_size, self.config.depth * 32 * (5 * 5)
             ),
-            nn.Unflatten(1, (self.config.depth * 32, 1)),
-            nn.Unflatten(2, (1, 1)),
+            nn.Unflatten(1, (self.config.depth * 32, 5*5)),
+            nn.Unflatten(2, (5, 5)),
             nn.ConvTranspose2d(
                 self.config.depth * 32,
                 self.config.depth * 4,
