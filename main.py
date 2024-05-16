@@ -2,6 +2,10 @@ import os
 
 os.environ["MUJOCO_GL"] = "egl"
 
+# Set the environment variable before initializing PyTorch
+# This is to enable using 128x128 image inputs 
+os.environ["PYTORCH_CUDA_ALLOC_CONF"] = "max_split_size_mb:128"
+
 import argparse
 from datetime import datetime
 from torch.utils.tensorboard import SummaryWriter
