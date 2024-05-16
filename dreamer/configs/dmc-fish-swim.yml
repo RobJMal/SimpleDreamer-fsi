@@ -10,8 +10,8 @@ environment :
     seed : 0
     visualize_reward : False
     from_pixels : True
-    height : 64
-    width : 64
+    height : 128 #64
+    width : 128 #64
     frame_skip : 2
     pixel_norm : True
 
@@ -25,25 +25,25 @@ parameters :
         num_interaction_episodes : 1
         seed_episodes : 10
         num_evaluate : 3
-        
+
         kl_divergence_scale : 1
         free_nats : 3
         discount : 0.99
         lambda_ : 0.95
-        
+
         use_continue_flag : False
         actor_learning_rate : 0.00008
         critic_learning_rate : 0.00008
         model_learning_rate : 0.0006
         grad_norm_type : 2
         clip_grad : 100
-        
+
         deterministic_size : 200
         stochastic_size : 30
-        embedded_state_size : 1024
+        embedded_state_size : 9216 # (9216) for <128x128> images # 1024 for <64x64> images
         buffer :
             capacity : 50000 # 5000000
-        
+
         encoder : 
             depth : 32
             stride : 2
