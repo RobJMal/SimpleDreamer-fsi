@@ -15,6 +15,7 @@ from dreamer.utils.utils import (
 )
 from dreamer.utils.buffer import ReplayBuffer
 
+import wandb
 
 class Dreamer:
     def __init__(
@@ -72,10 +73,12 @@ class Dreamer:
         self.num_total_episode = 0
 
     def train(self, env):
+        print(f"Running training")
         if len(self.buffer) < 1:
             self.environment_interaction(env, self.config.seed_episodes)
 
         for iteration in range(self.config.train_iterations):
+            print(f"Training iteration {iteration}")
             for collect_interval in range(self.config.collect_interval):
                 data = self.buffer.sample(
                     self.config.batch_size, self.config.batch_length
@@ -296,4 +299,5 @@ class Dreamer:
         if not train:
             evaluate_score = score_lst.mean()
             print("evaluate score : ", evaluate_score)
+            wandb.log({"evaluation_reward":evaluate_score, "num_total_episodes":self.num_total_episode})
             self.writer.add_scalar("test score", evaluate_score, self.num_total_episode)

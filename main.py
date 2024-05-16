@@ -15,6 +15,7 @@ from dreamer.algorithms.plan2explore import Plan2Explore
 from dreamer.utils.utils import load_config, get_base_directory
 from dreamer.envs.envs import make_dmc_env, make_atari_env, get_env_infos
 
+import wandb
 
 def main(config_file):
     config = load_config(config_file)
@@ -52,6 +53,16 @@ def main(config_file):
     writer = SummaryWriter(log_dir)
     device = config.operation.device
 
+    # wandb integration
+    wandb_run_name = f'SimpleDreamerV1_{config.environment.domain_name}-{config.environment.task_name}_{datetime.now().strftime("%Y-%m-%d_%H-%M-%S")}'
+    wandb.init(
+        project = config.operation.wandb_project,
+        group = config.operation.wandb_group,
+        entity = config.operation.wandb_entity,
+        name = wandb_run_name,
+        sync_tensorboard = True,
+    )
+
     if config.algorithm == "dreamer-v1":
         agent = Dreamer(
             obs_shape, discrete_action_bool, action_size, writer, device, config
@@ -72,3 +83,4 @@ if __name__ == "__main__":
         help="config file to run(default: dmc-walker-walk.yml)",
     )
     main(parser.parse_args().config)
+    wandb.finish()

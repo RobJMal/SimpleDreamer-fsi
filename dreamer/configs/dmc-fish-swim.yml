@@ -3,6 +3,9 @@ operation :
     save : True
     log_dir : fish-swim
     device : cuda
+    wandb_entity: srl_ethz
+    wandb_group: dreamerv3_dmc_walk_baseline
+    wandb_project: fsi_semester_project
 environment :
     benchmark : dmc
     domain_name : fish
