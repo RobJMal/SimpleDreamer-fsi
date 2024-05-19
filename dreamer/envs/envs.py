@@ -1,8 +1,11 @@
+import sys
+import os
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../dmc2gym-fsi')))
+
 import gym
-import dmc2gym
-
+# import dmc2gym
 from dreamer.envs.wrappers import *
-
+import dmc2gym_fsi
 
 def make_dmc_env(
     domain_name,
@@ -15,7 +18,7 @@ def make_dmc_env(
     frame_skip,
     pixel_norm=True,
 ):
-    env = dmc2gym.make(
+    env = dmc2gym_fsi.make(
         domain_name=domain_name,
         task_name=task_name,
         seed=seed,

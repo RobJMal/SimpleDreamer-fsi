@@ -13,8 +13,8 @@ environment :
     seed : 0
     visualize_reward : False
     from_pixels : True
-    height : 128 # 64
-    width : 128 # 64
+    height : 64 # Note that for 1 obs, there are 4 frames arranged in a grid, so total size is 128x128
+    width : 64
     frame_skip : 2
     pixel_norm : True
 
