@@ -63,7 +63,7 @@ def main(args):
             name = wandb_run_name,
             sync_tensorboard = True,
         )
-    # breakpoint()
+
     if config.algorithm == "dreamer-v1":
         agent = Dreamer(
             obs_shape, discrete_action_bool, action_size, writer, device, config
