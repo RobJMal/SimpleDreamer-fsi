@@ -3,6 +3,9 @@ operation :
     save : False
     log_dir : walker-walk
     device : cuda
+    wandb_entity: srl_ethz
+    wandb_group: dreamerv3_dmc_walk_baseline
+    wandb_project: fsi_semester_project
 environment :
     benchmark : dmc
     domain_name : walker
@@ -42,7 +45,7 @@ parameters :
         stochastic_size : 30
         embedded_state_size : 1024
         buffer :
-            capacity : 5000000
+            capacity : 500000
         
         encoder : 
             depth : 32
