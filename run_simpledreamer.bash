@@ -1,1 +1,1 @@
-python main.py --config dmc-fish-swim
+python main.py --config dmc-walker-walk --log_to_wandb online

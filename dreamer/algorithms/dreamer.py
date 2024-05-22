@@ -15,6 +15,7 @@ from dreamer.utils.utils import (
 )
 from dreamer.utils.buffer import ReplayBuffer
 
+import wandb
 
 class Dreamer:
     def __init__(
@@ -296,4 +297,5 @@ class Dreamer:
         if not train:
             evaluate_score = score_lst.mean()
             print("evaluate score : ", evaluate_score)
+            wandb.log({"evaluation_reward":evaluate_score, "num_total_episodes":self.num_total_episode})
             self.writer.add_scalar("test score", evaluate_score, self.num_total_episode)

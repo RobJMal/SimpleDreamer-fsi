@@ -11,9 +11,10 @@ from dreamer.algorithms.plan2explore import Plan2Explore
 from dreamer.utils.utils import load_config, get_base_directory
 from dreamer.envs.envs import make_dmc_env, make_atari_env, get_env_infos
 
+import wandb
 
-def main(config_file):
-    config = load_config(config_file)
+def main(args):
+    config = load_config(args.config)
 
     if config.environment.benchmark == "atari":
         env = make_atari_env(
@@ -48,6 +49,17 @@ def main(config_file):
     writer = SummaryWriter(log_dir)
     device = config.operation.device
 
+    # wandb integration
+    if args.log_to_wandb == "online": 
+        wandb_run_name = f'SimpleDreamerV1_{config.environment.domain_name}-{config.environment.task_name}_{datetime.now().strftime("%Y-%m-%d_%H-%M-%S")}'
+        wandb.init(
+            project = config.operation.wandb_project,
+            group = config.operation.wandb_group,
+            entity = config.operation.wandb_entity,
+            name = wandb_run_name,
+            sync_tensorboard = True,
+        )
+
     if config.algorithm == "dreamer-v1":
         agent = Dreamer(
             obs_shape, discrete_action_bool, action_size, writer, device, config
@@ -61,10 +73,8 @@ def main(config_file):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument(
-        "--config",
-        type=str,
-        default="dmc-walker-walk.yml",
-        help="config file to run(default: dmc-walker-walk.yml)",
-    )
-    main(parser.parse_args().config)
+    parser.add_argument("--config", type=str, default="dmc-walker-walk.yml", help="config file to run(default: dmc-walker-walk.yml)")
+    parser.add_argument("--log_to_wandb", type=str, default='offline', help="logging to wandb (options: online, offline)")
+    args = parser.parse_args()
+    main(args)
+    wandb.finish()
